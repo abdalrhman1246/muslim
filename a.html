@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض سور القرآن الكريم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            direction: rtl; /* تغيير الاتجاه ليكون من اليمين لليسار */
+            text-align: right;
+        }
+        .header {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            color: #ffa500;
+        }
+        .surah-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px;
+        }
+        .surah-item {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .surah-item:hover {
+            background-color: #3d3d3d;
+        }
+        .ayahs {
+            margin: 20px;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #ffa500;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>القرآن الكريم</h1>
+    </div>
+    <div class="surah-list" id="surahList"></div>
+    <div class="ayahs" id="ayahContainer"></div>
+
+    <script>
+        // دالة لتحويل الأرقام إلى الأرقام العربية
+        function toArabicNumerals(number) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return number.toString().split('').map(digit => arabicNumbers[digit]).join('');
+        }
+
+        async function getSurahs() {
+            const res = await fetch('https://api.alquran.cloud/v1/surah');
+            const data = await res.json();
+            window.surahData = data.data;
+            renderSurahs(window.surahData);
+        }
+
+        function renderSurahs(surahs) {
+            const container = document.getElementById('surahList');
+            container.innerHTML = '';
+            surahs.forEach(surah => {
+                const div = document.createElement('div');
+                div.className = 'surah-item';
+                div.innerHTML = `${toArabicNumerals(surah.number)}. ${surah.name}`;
+                div.onclick = () => fetchAyahs(surah.number, surah.name);
+                container.appendChild(div);
+            });
+        }
+
+        async function fetchAyahs(surahNumber, surahName) {
+            const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
+            const data = await res.json();
+            const ayahHtml = data.data.ayahs.map(ayah => {
+                let ayahText = `${ayah.text} ﴿${toArabicNumerals(ayah.numberInSurah)}﴾`;
+                if (ayahText.includes("بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ")) {
+                    ayahText = `بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ<hr> ${ayahText}`;
+                }
+                return `<p>${ayahText}</p>`;
+            }).join('');
+            document.getElementById('ayahContainer').innerHTML = `<h2>${surahName}</h2><br>${ayahHtml}`;
+        }
+
+        getSurahs();
+    </script>
+</body>
+</html>

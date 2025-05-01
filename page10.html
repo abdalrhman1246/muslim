@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مشغل سور القرآن الكريم</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #121212; /* Dark background */
+      color: white;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #00bcd4;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 15px;
+      border: 2px solid #00bcd4;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 20px;
+      text-align: center;
+      background-color: #1e1e1e;
+      color: white;
+    }
+
+    .surah-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .surah-btn {
+      background-color: #0d47a1; /* Blue dark */
+      color: white;
+      border: none;
+      padding: 20px 30px; /* Larger buttons */
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 22px;
+      transition: background-color 0.3s;
+    }
+
+    .surah-btn:hover {
+      background-color: #1565c0;
+    }
+
+    audio {
+      margin-top: 30px;
+      width: 350px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>مشغل سور القرآن الكريم - اسلام صبحي</h1>
+
+  <input type="text" id="searchInput" placeholder="ابحث عن سورة..." oninput="filterSurahs()">
+
+  <div class="surah-list" id="surahList"></div>
+
+  <audio id="audioPlayer" controls></audio>
+
+  <script>
+    const baseUrl = "https://server14.mp3quran.net/islam/Rewayat-Hafs-A-n-Assem/";
+
+    const surahNames = [
+      "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", 
+      "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", 
+      "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+      "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", 
+      "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", 
+      "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", 
+      "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", 
+      "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", 
+      "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", 
+      "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", 
+      "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", 
+      "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", 
+      "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", 
+      "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", 
+      "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", 
+      "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", 
+      "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", 
+      "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", 
+      "النصر", "المسد", "الإخلاص", "الفلق", "الناس"
+    ];
+
+    const surahList = document.getElementById('surahList');
+    const audioPlayer = document.getElementById('audioPlayer');
+    let currentSurahIndex = 0;
+
+    function createSurahButtons() {
+      surahList.innerHTML = '';
+      surahNames.forEach((name, index) => {
+        const button = document.createElement('button');
+        button.textContent = name;
+        button.className = 'surah-btn';
+        button.dataset.index = index;
+        button.addEventListener('click', () => {
+          playSurah(index);
+        });
+        surahList.appendChild(button);
+      });
+    }
+
+    createSurahButtons();
+
+    function playSurah(index) {
+      const surahNumber = (index + 1).toString().padStart(3, '0');
+      const audioSrc = baseUrl + surahNumber + ".mp3";
+      audioPlayer.src = audioSrc;
+      audioPlayer.play();
+      currentSurahIndex = index;
+    }
+
+    function filterSurahs() {
+      const searchTerm = document.getElementById('searchInput').value.trim();
+      const buttons = document.querySelectorAll('.surah-btn');
+      buttons.forEach(btn => {
+        if (btn.textContent.includes(searchTerm)) {
+          btn.style.display = 'inline-block';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+    }
+
+    audioPlayer.addEventListener('ended', () => {
+      if (currentSurahIndex < surahNames.length - 1) {
+        playSurah(currentSurahIndex + 1);
+      }
+    });
+  </script>
+
+</body>
+</html>

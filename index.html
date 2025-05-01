@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مُسْلِم</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/all.min.css">
+</head>
+<body>
+    <!-- start header -->
+    <div class="header">
+        <div class="container">
+            <h1 class="logo">مُسْلِم</h1>
+            <div class="centerlinks">
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#about">معلومات عنا</a></li>
+                    <li><a href="#menu">البث المرئي</a></li>
+                    <li><a href="#products">اضافات أخرى</a></li>
+                    <li><a href="#review">الاستماع</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="iconRight">
+                
+            </div>
+            <div class="links">
+                <span class="icon"><span></span><span></span><span></span></span>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#about">معلومات عنا</a></li>
+                    <li><a href="#menu">البث المرئي</a></li>
+                    <li><a href="#products">اضافات أخرى</a></li>
+                    <li><a href="#review">الاستماع</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end header -->
+    <!-- start home -->
+    <div class="home" id="home">
+        <div class="home-content">
+            <div class="home-text">
+                
+                <p> أَقِمِ الصَّلاةَ لِدُلُوكِ الشَّمْسِ إِلَى غَسَقِ اللَّيْلِ وَقُرْآنَ الْفَجْرِ إِنَّ قُرْآنَ الْفَجْرِ كَانَ مَشْهُوداً</p>
+                
+            
+        </div>
+    </div>
+    </div>
+   
+    <div class="about" id="about">
+        <h1>معلومات عنا</h1>
+        <div class="container">
+                <img src="images/im2.jpg">
+                <div class="about-text">
+                
+                    <h3>نحن نعمل على رفع مثل هذه المواقع التي تتضمن الاهتمام بالدين الاسلامي بما في ذلك الاستماع للقران الكريم وقراته كما يتضمن الموقع اضافات لطيفة مثل القصائد الإسلامية، البث المباشر للقنوات الدينية وتطبيق المسبحة الاكترونية</h3>
+                    <p>شكرا على الزيارة</p>
+                    
+                </div>
+        </div>
+    </div>
+    <!-- end about -->
+    <!-- start menu -->
+    <!-- start menu -->
+<div class="menu" id="menu">
+    <h1>البث المرئي المباشر</h1>
+    <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+      <div class="channel-buttons" style="margin: 30px 0; display: flex; gap: 20px;">
+        <button class="btn" onclick="playChannel('quran')" style="padding: 15px 25px; font-size: 18px; font-weight: bold; border-radius: 30px; border: none; cursor: pointer; background: #eb6906; color: white;">القرآن الكريم</button>
+        <button class="btn" onclick="playChannel('sunnah')" style="padding: 15px 25px; font-size: 18px; font-weight: bold; border-radius: 30px; border: none; cursor: pointer; background: #ff7700; color: white;">السنة النبوية</button>
+      </div>
+  
+      <video id="video" controls style="width: 90%; max-width: 800px; height: 500px; border-radius: 15px; background: black;"></video>
+  
+      <div id="channelInfo" class="channel-info" style="margin-top: 20px; font-size: 18px; color: #000;"></div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    function playChannel(channel) {
+      var video = document.getElementById('video');
+      var url = '';
+      var infoText = '';
+  
+      if (channel === 'quran') {
+        url = 'https://win.holol.com/live/quran/playlist.m3u8';
+        infoText = 'القناة: القرآن الكريم<br>البث المباشر للقرآن الكريم.';
+      } else if (channel === 'sunnah') {
+        url = 'https://win.holol.com/live/sunnah/playlist.m3u8';
+        infoText = 'القناة: السنة النبوية<br>البث المباشر لحديث النبي صلى الله عليه وسلم.';
+      }
+  
+      document.getElementById('channelInfo').innerHTML = infoText;
+  
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          video.play();
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+        video.addEventListener('loadedmetadata', function () {
+          video.play();
+        });
+      }
+    }
+  </script>
+  
+  
+    <!-- end menu -->
+    <!-- start products -->
+        <div class="products" id="products">
+            <h1>اضافات أخرى</h1>
+            <div class="container">
+                <div class="products-content">
+                    <div class="icon">
+                        
+                    </div>
+                    <a href="a.html">
+                    <img src="images/im4.jpg">
+                    </a>
+                    <h3>تصفح القرآن</h3>
+                    
+                </div>
+                <div class="products-content">
+                    <div class="icon">
+                        
+                    </div>
+                    <a href="b.html">
+                    <img src="images/im10.jpg">
+                    </a>
+                    <h3>المسبحة الاكترونية</h3>
+                    
+                    
+                </div>
+                <div class="products-content">
+                    <div class="icon">
+                       
+                    </div>
+                    <a href="c.html">
+                    <img src="images/im6.jpg">
+                    </a>
+                    <h3>أدعية</h3>
+                    
+                </div>
+                <div class="products-content">
+                    <div class="icon">
+                        
+                    </div>
+                    <a href="d.html">
+                    <img src="images/im7.jpg">
+                    </a>
+                    <h3>قصائد اسلامية</h3>
+                    
+                </div>
+            </div>
+        </div>
+    <!-- end products -->
+    <!-- start review -->
+    <div class="review" id="review">
+        <h1>الاستماع بصوت القرّاء</h1>
+        <div class="container">
+            <div class="review-content">
+                
+                <p>عبدالباسط عبدالصمد
+                    أسطورة التلاوة في العالم الإسلامي، وُلد في مصر ولقّب بـ"صوت السماء".
+                    جمع بين جمال الصوت والإتقان في أحكام التلاوة، وتأثر به أجيال من القرّاء.
+                    قراءته تُشعر المستمع بعظمة القرآن، ولا تزال تسجلاته تُبث في كل زمان ومكان.</p>
+                    <a href="page6.html">
+                        <img src="images/abdalbaseed.jpg" alt="abdalbaseed">
+                      </a>
+                      
+                
+                <h3>عبدالباسط عبدالصمد</h3>
+                
+            </div>
+            <div class="review-content">
+                
+                
+                <p>ياسر الدوسري
+                    يُعد من أبرز قرّاء السعودية، ويشغل منصب إمام وخطيب المسجد الحرام.
+                    صوته يتميز بالوقار والسكينة، وأسلوبه في التلاوة يجمع بين القوة والخشوع.
+                    نال إعجاب كثير من المسلمين حول العالم، خاصةً في صلوات التراويح والقيام.</p>
+                    <a href="page7.html">
+                        <img src="images/yasser.jpg" alt="Yasser">
+                      </a>
+                      
+                
+            
+                <h3>ياسر الدوسري</h3>
+                
+            </div>
+            <div class="review-content">
+                
+                
+                <p>ماهر المعيقلي
+                    إمام وخطيب المسجد الحرام، وصاحب صوت مميز يمزج بين الحزن والطمأنينة.
+                    تلاواته في الحرمين تُعد من أكثر التسجيلات استماعاً حول العالم الإسلامي.
+                    يُعرف بدقته في الوقوف ومخارج الحروف، مما يجعل تلاوته مرجعاً للمتعلمين.</p>
+                    <a href="page9.html">
+                        <img src="images/maher.jpg" alt="Mahher">
+                      </a>
+                      
+                <h3>ماهر المعيقلي</h3>
+                
+            </div>
+            <div class="review-content">
+                
+                <p>فارس عباد
+                    قارئ يمني عُرف بصوته الشجي وخشوعه في التلاوة، ويُبث له الكثير من المقاطع عبر الإنترنت.
+                    برز اسمه في إذاعات القرآن وتطبيقاته، وله حضور قوي خاصة بين الشباب.
+                    أسلوبه يجمع بين العذوبة والتأمل، مما يجذب القلوب للقرآن.</p>
+                    <a href="page8.html">
+                        <img src="images/farees.jpg" alt="Farees">
+                      </a>
+                      
+                <h3>فارس عباد</h3>
+                
+            </div>
+            <div class="review-content">
+                
+                
+                <p>إسلام صبحي
+                    قارئ مصري شاب اشتهر عبر منصات التواصل الاجتماعي بصوته المؤثر.
+                    يمتاز بأسلوب حديث يمزج بين الترتيل والتجويد بأسلوب يجذب الجيل الجديد.
+                    لاقى شهرة واسعة رغم صغر سنه، وأصبح من أكثر القرّاء استماعاً في المنصات الرقمية.</p>
+                    <a href="page10.html">
+                        <img src="images/islaam.jpg" alt="Yasser">
+                      
+                       
+                        </a>
+                <h3>اسلام صبحي</h3>
+                
+                
+            </div>
+        </div>
+    </div>
+    <!-- end review -->
+    <!-- start contact -->
+   
+        </div>
+    </div>
+    <!-- end contact -->
+    <!-- start footer -->
+    <div class="footer" id="contact">
+        <div class="container">
+            <div class="icon-contact">
+                <a href="https://www.facebook.com/abdalrhman.jamal.737" target="">
+                  <i class="fa-brands fa-facebook"></i>
+                </a>
+                
+                <a href="https://www.instagram.com/abdalrhman.jamal.737?igsh=MTA3Z3JwMHllOGFvZw==" target="">
+                  <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://t.me/SDS01" target="">
+                  <i class="fa-brands fa-telegram"></i>
+                </a>
+                <a href="https://github.com/abdalrhman1246" target="">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+              
+            <nav>
+                <button><a href="#home">الرئيسية</a></button>
+                <button><a href="#about">معلومات عنا</a></button>
+                <button><a href="#menu">البث المرئي</a></button>
+                <button><a href="#products">اضافات أخرى</a></button>
+                <button><a href="#review">الاستماع</a></button>
+                <button><a href="#contact">اتصل بنا</a></button>
+            </nav>
+            <p>k07823431263@gmail.com</p>
+        </div>
+    </div>
+    <!-- end footer -->
+    
+</body>
+</html>
